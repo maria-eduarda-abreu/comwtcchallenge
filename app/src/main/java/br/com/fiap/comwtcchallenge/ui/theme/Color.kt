@@ -1,4 +1,4 @@
-package br.com.fiap.comwtcchallenge.ui.theme
+package br.com.fiap.comwtcchallenge.ui.theme // <--- A CORREÇÃO ESTÁ AQUI
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,20 +1,23 @@
 /*
- * ATENÇÃO: Substitua o conteúdo do seu build.gradle.kts (Module :app)
- * por este. Você precisará sincronizar o projeto (Sync Now).
+ * ARQUIVO CORRIGIDO:
+ * 1. Adicionado o plugin 'org.jetbrains.kotlin.plugin.compose'.
+ * 2. Removida a linha 'kotlinCompilerExtensionVersion' de 'composeOptions'
+ * (pois o plugin agora controla a versão).
  */
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    // Adicione o plugin do Google Services
     id("com.google.gms.google-services")
+    // A LINHA ABAIXO FOI ADICIONADA:
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
-    namespace = "com.wtc.challenge" // Certifique-se que é o seu pacote
+    namespace = "br.com.fiap.comwtcchallenge" // Pacote correto (pelo seu print)
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.wtc.challenge"
+        applicationId = "br.com.fiap.comwtcchallenge"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -46,7 +49,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.10.1"
+        // A LINHA 'kotlinCompilerExtensionVersion' FOI REMOVIDA DAQUI.
     }
     packaging {
         resources {
@@ -56,7 +59,7 @@ android {
 }
 
 dependencies {
-
+    // As dependências continuam as mesmas
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
     implementation("androidx.activity:activity-compose:1.9.0")
@@ -76,7 +79,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.3")
 
     // Firebase (BOM - Bill of Materials)
-    // Isso garante que todas as bibliotecas do Firebase são compatíveis
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
 
     // 1. Autenticação
@@ -100,3 +102,4 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+

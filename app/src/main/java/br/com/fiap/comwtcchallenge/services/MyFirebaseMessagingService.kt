@@ -1,4 +1,5 @@
-package com.wtc.challenge.services
+// ERRO CORRIGIDO AQUI: A linha do "package" foi atualizada.
+package br.com.fiap.comwtcchallenge.services
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -15,7 +16,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.wtc.challenge.R
+import br.com.fiap.comwtcchallenge.R // Import corrigido para o R
 
 /**
  * Task 3: Serviço de Notificações
@@ -35,20 +36,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Checa se a mensagem tem dados (payload)
         remoteMessage.data.isNotEmpty().let {
             Log.d("FCM", "Message data payload: " + remoteMessage.data)
-            // Aqui você pode tratar a mensagem (ex: salvar no DB local, disparar broadcast)
         }
 
         // Checa se a mensagem tem uma notificação (payload)
         remoteMessage.notification?.let {
             Log.d("FCM", "Message Notification Body: ${it.body}")
-            // Exibe a notificação PUSH
             sendNotification(it.title ?: "Nova Mensagem", it.body ?: "Você tem uma nova mensagem.")
         }
     }
 
     /**
      * Chamado quando o FCM gera um novo token para o dispositivo.
-     * Devemos salvar este token no perfil do usuário no Firestore.
      */
     override fun onNewToken(token: String) {
         Log.d("FCM", "Refreshed token: $token")
@@ -56,7 +54,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendRegistrationToServer(token: String) {
-        // Atualiza o token do usuário logado no Firestore
         auth.currentUser?.uid?.let { uid ->
             db.collection("users").document(uid)
                 .update("fcmToken", token)
@@ -72,7 +69,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val channelId = "wtc_channel_id"
         val channelName = "WTC Notificações"
 
-        // Cria o NotificationChannel (Obrigatório para Android 8.0+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 channelId,
@@ -84,21 +80,19 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
 
         val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.ic_launcher) // TODO: Trocar por ícone de notificação
+            // Certifique-se que você tem um ic_launcher em "mipmap"
+            .setSmallIcon(R.mipmap.ic_launcher)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
 
         with(NotificationManagerCompat.from(this)) {
-            // Permissão é necessária para API 33+
             if (ActivityCompat.checkSelfPermission(
                     this@MyFirebaseMessagingService,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // Se não tiver permissão, não faz nada.
-                // A permissão deve ser pedida na MainActivity.
                 Log.w("FCM", "Sem permissão para postar notificações.")
                 return
             }
