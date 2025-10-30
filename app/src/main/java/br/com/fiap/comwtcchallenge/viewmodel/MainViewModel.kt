@@ -19,7 +19,6 @@ import br.com.fiap.comwtcchallenge.data.UserProfile
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ServerTimestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -34,7 +33,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-import java.util.Date
 
 class MainViewModel : ViewModel() {
 
@@ -185,8 +183,14 @@ class MainViewModel : ViewModel() {
                     return@addSnapshotListener
                 }
                 if (snapshot != null) {
-                    _clients.value = snapshot.toObjects()
-                    Log.d("ViewModel", "Clientes carregados: ${_clients.value.size}")
+                    // Tenta converter. Se falhar, o app vai crashar e veremos no Logcat.
+                    try {
+                        _clients.value = snapshot.toObjects()
+                        Log.d("ViewModel", "Clientes carregados: ${_clients.value.size}")
+                    } catch (e: Exception) {
+                        Log.e("ClientsError", "CRASH AO CONVERTER CLIENTES: ${e.message}")
+                        _errorMessage.value = "Erro de dados: Verifique os tipos no Firestore (ex: status, score)."
+                    }
                 }
             }
     }
@@ -238,7 +242,12 @@ class MainViewModel : ViewModel() {
                     return@addSnapshotListener
                 }
                 if (snapshot != null) {
-                    _messages.value = snapshot.toObjects()
+                    try {
+                        _messages.value = snapshot.toObjects()
+                    } catch (e: Exception) {
+                        Log.e("ChatError", "CRASH AO CONVERTER MENSAGENS: ${e.message}")
+                        _errorMessage.value = "Erro de dados: Verifique os tipos no chat (ex: timestamp)."
+                    }
                 }
             }
     }
