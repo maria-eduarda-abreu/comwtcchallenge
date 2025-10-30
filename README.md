@@ -3,7 +3,6 @@ CHALLENGE WTC - Plataforma de Comunicação com Clientes
 
 Este repositório contém o código-fonte do aplicativo Android nativo desenvolvido para a Sprint 1 do "Challenge WTC". O objetivo é criar uma plataforma de comunicação moderna, similar a um aplicativo de mensagens, que se integra ao CRM do WTC para melhorar o relacionamento com os clientes.
 
-Este documento serve como a documentação técnica oficial, detalhando as tecnologias, arquitetura e fluxos da aplicação.
 
 1\. Tecnologias Utilizadas
 --------------------------
@@ -140,15 +139,3 @@ A HomeScreen não é uma tela visível; ela é um "roteador" (@Composable) que d
         
     *   Quando o Firebase envia uma notificação push, este serviço a intercepta (onMessageReceived) e exibe uma notificação nativa no sistema do Android.
         
-
-### Observação de Segurança (Próximos Passos)
-
-O arquivo app/google-services.json foi (acidentalmente) enviado ao repositório do GitHub. Isso expõe chaves de API do Google.
-
-**Ação Corretiva Realizada (ou Pendente):**
-
-1.  O arquivo app/google-services.json foi adicionado ao .gitignore para prevenir futuros envios.
-    
-2.  O repositório foi tornado **privado**.
-    
-3.  As chaves de API expostas no Google Cloud Console devem ser revogadas e substituídas por novas (baixando um novo google-services.json).
