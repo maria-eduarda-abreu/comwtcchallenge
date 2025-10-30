@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "595177562923",
+    "project_id": "com-wtc-challenge",
+    "storage_bucket": "com-wtc-challenge.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:595177562923:android:4a7b7b366a738650a85b6e",
+        "android_client_info": {
+          "package_name": "com.wtc.challenge"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf7_OpsI_BilwdZPeQ8PQkITA9M8DrHFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
